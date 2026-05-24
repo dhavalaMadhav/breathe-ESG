@@ -1,80 +1,59 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/
-python-3.12*/
-.installed.cfg
-*.egg-info/
-.installed.cfg
-*.egg
-manifest
-spec
-venv/
-ENV/
-env/
-.env
-.venv
-pip-log.txt
-pip-delete-this-directory.txt
-htmlcov/
-.tox/
-.nosexy
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-*.mo
-*.pot
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+# =========================
+# DJANGO / PYTHON
+# =========================
 
-# Node / React (Vite)
-node_modules/
-/dist
+backend/venv/
+backend/db.sqlite3
+
+# Python cache
+**/__pycache__/
+*.py[cod]
+
+# Environment files
+.env
+backend/.env
+frontend/.env
+
+# Django static/media
+backend/staticfiles/
+backend/media/
+
+# =========================
+# REACT / NODE
+# =========================
+
+frontend/node_modules/
+frontend/dist/
+
+# npm logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.eslintcache
 
-# Logs
-logs
-*.log
-*.log.*
+# =========================
+# IDE
+# =========================
 
-# IDEs & System
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# =========================
+# OS FILES
+# =========================
+
 .DS_Store
 Thumbs.db
-desktop.ini
+
+# =========================
+# TEST / COVERAGE
+# =========================
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =========================
+# MISC
+# =========================
+
+*.log

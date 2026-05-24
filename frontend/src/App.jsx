@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from './services/api';
-import { useAuth } from './context/AuthContext';
-import AuthPage from './pages/AuthPage';
 import { 
   Database, Upload, AlertTriangle, CheckCircle, 
   Lock, FileText, Search, Filter, RefreshCw, X
 } from 'lucide-react';
 
 const App = () => {
-  const { user, loading: authLoading, logout } = useAuth();
-
   // Core State
   const [records, setRecords] = useState([]);
   const [batches, setBatches] = useState([]);
@@ -68,22 +64,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchData();
-    }
-  }, [statusFilter, sourceFilter, suspiciousFilter, user]);
-
-  if (authLoading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#0b0f19' }}>
-        <div className="spinner"></div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <AuthPage />;
-  }
+    fetchData();
+  }, [statusFilter, sourceFilter, suspiciousFilter]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -213,11 +195,8 @@ const App = () => {
           <h1 style={styles.brandTitle}>Breathe ESG <span style={styles.brandBadge}>Analyst Prototype</span></h1>
         </div>
         <div style={styles.headerMeta}>
-          <span style={styles.metaYear}>Tenant: {user.orgName}</span>
-          <span style={styles.metaYear}>Role: {user.role?.toUpperCase()}</span>
-          <button className="btn btn-secondary" onClick={logout} style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', fontWeight: '700' }}>
-            Logout
-          </button>
+          <span style={styles.metaYear}>Reporting Grid: SQLite (SQLite3)</span>
+          <span style={styles.metaYear}>Target Year: 2026</span>
         </div>
       </header>
 

@@ -8,10 +8,4 @@ urlpatterns = [
     path('records/<int:pk>/reject/', views.reject_record, name='reject_record'),
     path('batches/', views.list_batches, name='list_batches'),
     path('dashboard/stats/', views.dashboard_stats, name='dashboard_stats'),
-    
-    # Ingestion JWT Authentication Gates
-    path('auth/login/', views.auth_login, name='auth_login'),
-    path('auth/signup/', views.auth_signup, name='auth_signup'),
-    path('auth/profile/', views.auth_profile, name='auth_profile'),
-    path('auth/logout/', views.auth_logout, name='auth_logout'),
 ]
