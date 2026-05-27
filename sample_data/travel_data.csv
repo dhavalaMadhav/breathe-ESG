@@ -1,4 +1,0 @@
-employeeId,travelCategory,origin,destination,classType,hotelNights,taxiDistance,date
-EMP-105,Flights,JFK,CDG,Business,0,0,2026-05-10
-EMP-105,Hotels,,,Deluxe Room,5,0,2026-05-10
-EMP-106,Flights,XYZ,SIN,Economy,0,0,2026-05-12
