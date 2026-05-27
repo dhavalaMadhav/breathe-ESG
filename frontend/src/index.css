@@ -1,12 +1,12 @@
 :root {
-  /* Premium Dark Theme Color System (Linear/Stripe Inspired) */
-  --bg-deep: #0b0f19;
-  --bg-sidebar: #060911;
-  --bg-card: rgba(17, 25, 42, 0.75);
-  --bg-card-hover: rgba(23, 33, 56, 0.85);
-  --bg-input: #101726;
-  --border-color: #1e293b;
-  --border-glow: rgba(16, 185, 129, 0.15);
+  /* Premium Pure Dark/Black Color System (High-End Dark Theme) */
+  --bg-deep: #080808;         /* Jet Black */
+  --bg-sidebar: #0d0d0d;      /* Coal Black */
+  --bg-card: rgba(20, 20, 20, 0.85); /* Rich Charcoal Glass */
+  --bg-card-hover: rgba(28, 28, 30, 0.9); /* Carbon Hover Glass */
+  --bg-input: #161616;        /* Sleek Zinc Inset */
+  --border-color: #242426;    /* Dark Charcoal Border */
+  --border-glow: rgba(16, 185, 129, 0.2);
   
   /* Typography & Core Text */
   --font-primary: 'Inter', sans-serif;
@@ -233,7 +233,7 @@ button, input, select, textarea {
 }
 
 .enterprise-table th {
-  background-color: #0e1423;
+  background-color: #121212;
   color: var(--text-secondary);
   font-family: var(--font-display);
   font-weight: 600;
@@ -257,7 +257,7 @@ button, input, select, textarea {
 }
 
 .enterprise-table tbody tr:hover {
-  background-color: rgba(30, 41, 59, 0.4);
+  background-color: rgba(38, 38, 38, 0.45);
 }
 
 /* Dynamic Badges */
@@ -353,4 +353,84 @@ button, input, select, textarea {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Custom Responsive Adaptations */
+@media (max-width: 1024px) {
+  .app-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .responsive-app-shell {
+    padding: 1rem !important;
+  }
+  
+  .responsive-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .responsive-modal-card {
+    width: 92% !important;
+    max-width: 500px !important;
+    margin: 0 auto;
+  }
+  
+  .responsive-filters {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+  
+  .responsive-search-form {
+    width: 100% !important;
+    flex-direction: column !important;
+  }
+  
+  .responsive-search-form button {
+    width: 100% !important;
+    margin-top: 0.5rem;
+  }
+  
+  .responsive-selectors {
+    width: 100% !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .responsive-select-wrapper {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+  
+  .responsive-select-wrapper select {
+    flex: 1 !important;
+    width: 100% !important;
+  }
+  
+  .responsive-summary-deck {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .responsive-upload-row {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .responsive-bottom-split {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
 }

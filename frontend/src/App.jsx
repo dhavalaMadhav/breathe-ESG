@@ -175,7 +175,7 @@ const App = () => {
   };
 
   return (
-    <div style={styles.appShell}>
+    <div className="responsive-app-shell" style={styles.appShell}>
       
       {/* Toast Popup alert */}
       {toast && (
@@ -189,19 +189,19 @@ const App = () => {
       )}
 
       {/* Header bar */}
-      <header style={styles.header}>
+      <header className="responsive-header" style={styles.header}>
         <div style={styles.branding}>
-          <Database size={28} color="#10b981" />
-          <h1 style={styles.brandTitle}>Breathe ESG <span style={styles.brandBadge}>Analyst Prototype</span></h1>
+          <img src="/logo.png" alt="Breathe ESG Logo" style={{ height: '36px', width: 'auto', display: 'block', marginRight: '0.25rem' }} />
+          <h1 style={styles.brandTitle}>Breathe ESG <span className="mobile-hidden" style={styles.brandBadge}>Analyst Prototype</span></h1>
         </div>
-        <div style={styles.headerMeta}>
+        <div className="mobile-hidden" style={styles.headerMeta}>
           <span style={styles.metaYear}>Reporting Grid: SQLite (SQLite3)</span>
           <span style={styles.metaYear}>Target Year: 2026</span>
         </div>
       </header>
 
       {/* 1. Executive Summary Cards Panel */}
-      <div style={styles.summaryDeck}>
+      <div className="responsive-summary-deck" style={styles.summaryDeck}>
         <div className="glass-card" style={{ ...styles.statCard, paddingBottom: '1rem' }}>
           <span style={styles.statLabel}>APPROVED FOOTPRINT</span>
           <h2 style={{ ...styles.statVal, color: '#10b981', marginBottom: '0.25rem' }}>
@@ -214,7 +214,7 @@ const App = () => {
             height: '6px',
             borderRadius: '3px',
             overflow: 'hidden',
-            backgroundColor: '#1e293b',
+            backgroundColor: '#242426',
             margin: '0.6rem 0'
           }}>
             <div style={{ width: `${(stats.scopes['Scope 1'] || 0) / (((stats.scopes['Scope 1'] || 0) + (stats.scopes['Scope 2'] || 0) + (stats.scopes['Scope 3'] || 0)) || 1) * 100}%`, backgroundColor: '#ef4444', transition: 'width 0.3s ease' }}></div>
@@ -247,10 +247,10 @@ const App = () => {
             height: '6px',
             borderRadius: '3px',
             overflow: 'hidden',
-            backgroundColor: '#1e293b',
+            backgroundColor: '#242426',
             margin: '0.5rem 0 0.75rem 0'
           }}>
-            <div style={{ width: `${stats.total_records > 0 ? (stats.pending_count / stats.total_records) * 100 : 0}%`, backgroundColor: '#3b82f6', transition: 'width 0.3s ease' }}></div>
+            <div style={{ width: `${stats.total_records > 0 ? (stats.pending_count / stats.total_records) * 100 : 0}%`, backgroundColor: '#10b981', transition: 'width 0.3s ease' }}></div>
           </div>
           
           <p style={styles.statFooter}>Awaiting analyst sign-off</p>
@@ -267,7 +267,7 @@ const App = () => {
             height: '6px',
             borderRadius: '3px',
             overflow: 'hidden',
-            backgroundColor: '#1e293b',
+            backgroundColor: '#242426',
             margin: '0.5rem 0 0.75rem 0'
           }}>
             <div style={{ width: `${stats.total_records > 0 ? (stats.flagged_count / stats.total_records) * 100 : 0}%`, backgroundColor: '#f97316', transition: 'width 0.3s ease' }}></div>
@@ -287,7 +287,7 @@ const App = () => {
             height: '6px',
             borderRadius: '3px',
             overflow: 'hidden',
-            backgroundColor: '#1e293b',
+            backgroundColor: '#242426',
             margin: '0.5rem 0 0.75rem 0'
           }}>
             <div style={{ width: `${stats.total_records > 0 ? (stats.locked_count / stats.total_records) * 100 : 0}%`, backgroundColor: '#10b981', transition: 'width 0.3s ease' }}></div>
@@ -298,7 +298,7 @@ const App = () => {
       </div>
 
       {/* 2. Gateway Ingest Upload Center */}
-      <div style={styles.uploadRow}>
+      <div className="responsive-upload-row" style={styles.uploadRow}>
         {['SAP', 'Utility', 'Travel'].map(source => {
           const sStat = panelStats[source];
           const isCurrentUploading = uploadingSource === source;
@@ -362,8 +362,8 @@ const App = () => {
         </div>
 
         {/* Filters and search panel */}
-        <div style={styles.filtersPanel}>
-          <form onSubmit={handleSearch} style={{ display: 'flex', gap: '0.5rem', flex: 1 }}>
+        <div className="responsive-filters" style={styles.filtersPanel}>
+          <form className="responsive-search-form" onSubmit={handleSearch} style={{ display: 'flex', gap: '0.5rem', flex: 1 }}>
             <div style={styles.searchContainer}>
               <Search size={14} color="#64748b" style={styles.searchIcon} />
               <input
@@ -378,8 +378,8 @@ const App = () => {
             <button type="submit" className="btn btn-secondary" style={{ padding: '0 1rem' }}>Search</button>
           </form>
 
-          <div style={styles.selectorsRow}>
-            <div style={styles.selectWrapper}>
+          <div className="responsive-selectors" style={styles.selectorsRow}>
+            <div className="responsive-select-wrapper" style={styles.selectWrapper}>
               <Filter size={12} color="#64748b" />
               <select className="form-input" style={styles.smallSelect} value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                 <option value="">All Statuses</option>
@@ -389,7 +389,7 @@ const App = () => {
               </select>
             </div>
 
-            <div style={styles.selectWrapper}>
+            <div className="responsive-select-wrapper" style={styles.selectWrapper}>
               <select className="form-input" style={styles.smallSelect} value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value)}>
                 <option value="">All Sources</option>
                 <option value="SAP">SAP Fuel</option>
@@ -398,7 +398,7 @@ const App = () => {
               </select>
             </div>
 
-            <div style={styles.selectWrapper}>
+            <div className="responsive-select-wrapper" style={styles.selectWrapper}>
               <select className="form-input" style={styles.smallSelect} value={suspiciousFilter} onChange={(e) => setSuspiciousFilter(e.target.value)}>
                 <option value="">All Records</option>
                 <option value="true">Flagged Suspicious Only</option>
@@ -503,7 +503,7 @@ const App = () => {
       </div>
 
       {/* 4. Bottom Split Layout (Flagged Deck vs Approved locked) */}
-      <div style={styles.bottomSplit}>
+      <div className="responsive-bottom-split" style={styles.bottomSplit}>
         {/* Suspicious logs warnings panel */}
         <div className="glass-card" style={{ flex: 1 }}>
           <div style={styles.cardHeader}>
@@ -565,7 +565,7 @@ const App = () => {
       {/* 5. View Raw Data Modal Overlay */}
       {rawRecordModal && (
         <div style={styles.modalBackdrop} onClick={() => setRawRecordModal(null)}>
-          <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+          <div className="responsive-modal-card" style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
             <div style={styles.modalHeader}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <FileText size={18} color="#10b981" />
@@ -663,7 +663,7 @@ const styles = {
     width: '100%',
     margin: '0 auto',
     animation: 'fadeIn 0.4s ease-out forwards',
-    backgroundColor: '#0b0f19',
+    backgroundColor: '#080808',
     minHeight: '100vh',
     color: '#f8fafc'
   },
@@ -672,7 +672,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '2.5rem',
-    borderBottom: '1px solid #1e293b',
+    borderBottom: '1px solid #242426',
     paddingBottom: '1rem'
   },
   branding: {
@@ -707,8 +707,8 @@ const styles = {
   },
   metaYear: {
     fontSize: '0.75rem',
-    backgroundColor: '#101726',
-    border: '1px solid #1e293b',
+    backgroundColor: '#161616',
+    border: '1px solid #242426',
     borderRadius: '6px',
     padding: '0.35rem 0.75rem',
     color: '#94a3b8',
@@ -726,8 +726,8 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     minHeight: '130px',
-    backgroundColor: 'rgba(17, 25, 42, 0.75)',
-    border: '1px solid #1e293b'
+    backgroundColor: 'rgba(20, 20, 20, 0.85)',
+    border: '1px solid #242426'
   },
   statLabel: {
     fontSize: '0.7rem',
@@ -765,8 +765,8 @@ const styles = {
   },
   uploadCard: {
     padding: '1.5rem',
-    backgroundColor: 'rgba(17, 25, 42, 0.75)',
-    border: '1px solid #1e293b',
+    backgroundColor: 'rgba(20, 20, 20, 0.85)',
+    border: '1px solid #242426',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -791,14 +791,14 @@ const styles = {
     lineHeight: '1.4'
   },
   dropzone: {
-    border: '1.5px dashed #1e293b',
+    border: '1.5px dashed #242426',
     borderRadius: '8px',
     padding: '1.5rem 1rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(15, 23, 42, 0.25)',
+    backgroundColor: 'rgba(22, 22, 22, 0.4)',
     textAlign: 'center',
     cursor: 'pointer'
   },
@@ -835,8 +835,8 @@ const styles = {
   reviewCard: {
     marginBottom: '2.5rem',
     padding: '1.5rem',
-    backgroundColor: 'rgba(17, 25, 42, 0.75)',
-    border: '1px solid #1e293b'
+    backgroundColor: 'rgba(20, 20, 20, 0.85)',
+    border: '1px solid #242426'
   },
   tableHeaderRow: {
     display: 'flex',
@@ -859,10 +859,10 @@ const styles = {
     gap: '1rem',
     flexWrap: 'wrap',
     marginBottom: '1.5rem',
-    backgroundColor: '#060911',
+    backgroundColor: '#0d0d0d',
     padding: '0.75rem',
     borderRadius: '8px',
-    border: '1px solid #1e293b',
+    border: '1px solid #242426',
     alignItems: 'center'
   },
   searchContainer: {
@@ -877,8 +877,8 @@ const styles = {
   },
   searchInput: {
     width: '100%',
-    backgroundColor: '#0b0f19',
-    border: '1px solid #1e293b',
+    backgroundColor: '#080808',
+    border: '1px solid #242426',
     borderRadius: '6px',
     padding: '0.5rem 1rem 0.5rem 2rem',
     color: '#f8fafc',
@@ -892,8 +892,8 @@ const styles = {
     display: 'inline-flex',
     alignItems: 'center',
     gap: '0.35rem',
-    backgroundColor: '#101726',
-    border: '1px solid #1e293b',
+    backgroundColor: '#161616',
+    border: '1px solid #242426',
     borderRadius: '6px',
     padding: '0 0.4rem'
   },
@@ -994,7 +994,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(3, 7, 18, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(3px)',
     display: 'flex',
     alignItems: 'center',
@@ -1003,8 +1003,8 @@ const styles = {
   },
   modalCard: {
     width: '560px',
-    backgroundColor: '#0e1423',
-    border: '1px solid #1e293b',
+    backgroundColor: '#161616',
+    border: '1px solid #242426',
     borderRadius: '12px',
     boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
     overflow: 'hidden',
@@ -1012,7 +1012,7 @@ const styles = {
   },
   modalHeader: {
     padding: '1.25rem',
-    borderBottom: '1px solid #1e293b',
+    borderBottom: '1px solid #242426',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -1030,8 +1030,8 @@ const styles = {
     padding: '1.25rem'
   },
   jsonBlock: {
-    backgroundColor: '#060911',
-    border: '1px solid #1e293b',
+    backgroundColor: '#0d0d0d',
+    border: '1px solid #242426',
     borderRadius: '8px',
     padding: '1rem',
     color: '#34d399',
@@ -1048,8 +1048,8 @@ const styles = {
     marginTop: '0.5rem'
   },
   normCompCell: {
-    backgroundColor: '#101726',
-    border: '1px solid #1e293b',
+    backgroundColor: '#161616',
+    border: '1px solid #242426',
     borderRadius: '6px',
     padding: '0.5rem',
     display: 'flex',
