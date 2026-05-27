@@ -1,11 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import api from './services/api';
-import { 
-  Database, Upload, AlertTriangle, CheckCircle, 
+import {
+  Database, Upload, AlertTriangle, CheckCircle,
   Lock, FileText, Search, Filter, RefreshCw, X
 } from 'lucide-react';
+import LoginPage from './pages/LoginPage';
 
 const App = () => {
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('madhav_logged_in') === 'true';
+    setIsAuthenticated(loggedIn);
+  }, []);
+
+  const handleLogin = (username, password) => {
+    if (username === 'madhav' && password === 'Madhav@3365') {
+      localStorage.setItem('madhav_logged_in', 'true');
+      setIsAuthenticated(true);
+      return true;
+    }
+    return false;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('madhav_logged_in');
+    setIsAuthenticated(false);
+  };
+
   // Core State
   const [records, setRecords] = useState([]);
   const [batches, setBatches] = useState([]);
@@ -64,8 +87,10 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [statusFilter, sourceFilter, suspiciousFilter]);
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [statusFilter, sourceFilter, suspiciousFilter, isAuthenticated]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -98,7 +123,7 @@ const App = () => {
       });
 
       const { batch } = response.data;
-      
+
       // Update specific panel stats
       setPanelStats(prev => ({
         ...prev,
@@ -174,9 +199,13 @@ const App = () => {
     }
   };
 
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
   return (
     <div className="responsive-app-shell" style={styles.appShell}>
-      
+
       {/* Toast Popup alert */}
       {toast && (
         <div style={{
@@ -194,9 +223,28 @@ const App = () => {
           <img src="/logo.png" alt="Breathe ESG Logo" style={{ height: '36px', width: 'auto', display: 'block', marginRight: '0.25rem' }} />
           <h1 style={styles.brandTitle}>Breathe ESG <span className="mobile-hidden" style={styles.brandBadge}>Analyst Prototype</span></h1>
         </div>
-        <div className="mobile-hidden" style={styles.headerMeta}>
-          <span style={styles.metaYear}>Reporting Grid: SQLite (SQLite3)</span>
-          <span style={styles.metaYear}>Target Year: 2026</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+          <div className="mobile-hidden" style={styles.headerMeta}>
+            <span style={styles.metaYear}>Reporting Grid: SQLite (SQLite3)</span>
+            <span style={styles.metaYear}>Target Year: 2026</span>
+          </div>
+          <button
+            className="btn btn-secondary"
+            onClick={handleLogout}
+            style={{
+              padding: '0.35rem 0.75rem',
+              fontSize: '0.75rem',
+              borderColor: '#ef4444',
+              color: '#ef4444',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              backgroundColor: 'rgba(239, 68, 68, 0.05)'
+            }}
+          >
+            <Lock size={12} /> Log Out
+          </button>
         </div>
       </header>
 
@@ -207,7 +255,7 @@ const App = () => {
           <h2 style={{ ...styles.statVal, color: '#10b981', marginBottom: '0.25rem' }}>
             {(stats.total_co2e / 1000).toFixed(2)} <span style={styles.statUnit}>tons CO₂e</span>
           </h2>
-          
+
           {/* Dynamic Stacked Scope Chart Bar */}
           <div style={{
             display: 'flex',
@@ -241,7 +289,7 @@ const App = () => {
         <div className="glass-card" style={styles.statCard}>
           <span style={styles.statLabel}>PENDING AUDIT QUEUE</span>
           <h2 style={styles.statVal}>{stats.pending_count} <span style={styles.statUnit}>records</span></h2>
-          
+
           {/* Dynamic Pending Progress bar */}
           <div style={{
             height: '6px',
@@ -252,7 +300,7 @@ const App = () => {
           }}>
             <div style={{ width: `${stats.total_records > 0 ? (stats.pending_count / stats.total_records) * 100 : 0}%`, backgroundColor: '#10b981', transition: 'width 0.3s ease' }}></div>
           </div>
-          
+
           <p style={styles.statFooter}>Awaiting analyst sign-off</p>
         </div>
 
@@ -316,7 +364,7 @@ const App = () => {
               </p>
 
               {/* Drag drop zone */}
-              <div 
+              <div
                 style={styles.dropzone}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => handleDrop(e, source)}
@@ -355,7 +403,7 @@ const App = () => {
             <h3 style={styles.sectionTitle}>Environmental Activity review queue</h3>
             <p style={styles.sectionDesc}>Verify conversion arithmetic, evaluate alerts, and lock compliant rows.</p>
           </div>
-          
+
           <button className="btn btn-secondary" onClick={fetchData} style={{ padding: '0.5rem' }}>
             <RefreshCw size={14} /> Re-sync
           </button>
@@ -511,7 +559,7 @@ const App = () => {
             <h3 style={styles.cardTitle}>Flagged anomalies warnings logs</h3>
           </div>
           <p style={styles.cardDesc}>Rows flagged by suspicious detector rules requiring manual check.</p>
-          
+
           <div style={styles.suspiciousDeck}>
             {records.filter(r => r.suspicious).length === 0 ? (
               <p style={styles.emptySplitText}>No flagged records in current list.</p>
@@ -575,7 +623,7 @@ const App = () => {
               </div>
               <button style={styles.modalClose} onClick={() => setRawRecordModal(null)}><X size={18} /></button>
             </div>
-            
+
             <div style={styles.modalBody}>
               <p style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem' }}>
                 Original parsed JSON data mapped from uploaded CSV spreadsheet before ESG transformations:
@@ -583,7 +631,7 @@ const App = () => {
               <pre style={styles.jsonBlock}>
                 {JSON.stringify(rawRecordModal.raw_data, null, 2)}
               </pre>
-              
+
               <h5 style={{ color: '#10b981', fontSize: '0.8rem', marginTop: '1.25rem', marginBottom: '0.5rem', fontFamily: 'Outfit, sans-serif' }}>
                 ESG Normalization output:
               </h5>
